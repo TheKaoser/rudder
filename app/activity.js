@@ -36,7 +36,7 @@ const Activity = () => {
         <Text className="text-white">Guardar</Text>
       </TouchableOpacity>
       <ActivityField
-        size="2xl"
+        size="3xl"
         placeholder="Añade un título"
         ref={firstFieldRef}
         lines={2}
