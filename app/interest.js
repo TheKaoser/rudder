@@ -2,16 +2,17 @@ import { View, Text, TextInput, Switch, TouchableOpacity } from "react-native";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { useNewActivity } from "../hooks/useNewActivity";
+import { useNewInterest } from "../hooks/useNewInterest";
 import { useLocalSearchParams } from "expo-router";
+// import ColorPicker from "../components/colorPicker";
 
-const Activity = () => {
+const Interest = () => {
   const { id } = useLocalSearchParams();
   const firstFieldRef = useRef(null);
   const [startDatePopup, setStartDatePopup] = useState(false);
   const [endDatePopup, setEndDatePopup] = useState(false);
   const {
-    saveActivity,
+    saveInterest,
     title,
     description,
     currentDate,
@@ -24,7 +25,7 @@ const Activity = () => {
     setDescription,
     longerThanADay,
     setLongerThanADay,
-  } = useNewActivity(id);
+  } = useNewInterest(id);
 
   useEffect(() => {
     if (firstFieldRef.current) firstFieldRef.current.focus();
@@ -34,27 +35,28 @@ const Activity = () => {
     <View className="bg-gray-800 flex-1 pt-6">
       <TouchableOpacity
         className="px-5 py-2 items-center justify-center bg-green-600 rounded-full self-end mr-4"
-        onPress={saveActivity}
+        onPress={saveInterest}
       >
         <Text className="text-white">Guardar</Text>
       </TouchableOpacity>
-      <ActivityField
+      {/* <ColorPicker></ColorPicker> */}
+      <InterestField
         size="3xl"
         placeholder="Añade un título"
         ref={firstFieldRef}
-        value={title || ""}
+        value={title}
         lines={2}
         onChangeText={setTitle}
       />
-      <ActivityField
+      <InterestField
         placeholder="Añade una descripción"
         name="document-text-outline"
         lines={4}
         value={description}
         onChangeText={setDescription}
       />
-      <ActivityFieldBoolean
-        title="Actividad futura"
+      <InterestFieldBoolean
+        title="Interés futuro"
         setChecked={setIsFuture}
         checked={isFuture}
       />
@@ -65,7 +67,7 @@ const Activity = () => {
             date={currentDate}
             title="Fecha inicio"
           />
-          <ActivityFieldBoolean
+          <InterestFieldBoolean
             title="Dura más de un día"
             setChecked={setLongerThanADay}
             checked={longerThanADay}
@@ -114,7 +116,7 @@ const SelectDate = ({ setOpen, date, title }) => (
   </View>
 );
 
-const ActivityField = forwardRef((props, ref) => (
+const InterestField = forwardRef((props, ref) => (
   <View className="flex flex-row border-b border-gray-600 gap-2 p-4">
     <View className="w-1/12 items-center justify-center">
       <Ionicons name={props.name} size={24} color="white" />
@@ -132,7 +134,7 @@ const ActivityField = forwardRef((props, ref) => (
   </View>
 ));
 
-const ActivityFieldBoolean = ({ title, setChecked, checked }) => (
+const InterestFieldBoolean = ({ title, setChecked, checked }) => (
   <View className="flex flex-row border-gray-600 gap-2 items-center px-4 ">
     <View className="w-1/12" />
     <View className="flex-row justify-between flex-1 items-center">
@@ -142,4 +144,4 @@ const ActivityFieldBoolean = ({ title, setChecked, checked }) => (
   </View>
 );
 
-export default Activity;
+export default Interest;

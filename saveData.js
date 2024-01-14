@@ -7,7 +7,6 @@ export const getCachedData = async (key) => {
   } else {
     const data = await AsyncStorage.getItem(key);
     cache.set(key, data);
-    console.log("data: " + data);
     return data;
   }
 };
